@@ -15,6 +15,7 @@
     {% endfor %}
 </ul>
 {% endif %}
+
 <form action="{% url 'articles_create' %}" method="post">
     {% csrf_token %}
     <table border="1">

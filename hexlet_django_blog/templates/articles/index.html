@@ -7,5 +7,9 @@
         <h2><a href="{% url 'article' article.id %}">{{ article.name }}</a></h2>
         <div>{{ article.body}}</div>
         <div><a href="{% url 'articles_update' article.id %}">Редактировать статью</a></div>
+        <form action="{% url 'articles_delete' article.id %}" method="post">
+            {% csrf_token %}
+            <input type="submit" value="Удалить">
+        </form>
     {% endfor %}
 {% endblock %}
