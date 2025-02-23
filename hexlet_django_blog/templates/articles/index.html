@@ -6,4 +6,5 @@
         <h2><a href="{% url 'article' article.id %}">{{ article.name }}</a></h2>
         <div>{{ article.body}}</div>
     {% endfor %}
+    <h3><a href="{% url 'articles_create' %}">Создать новую статью</a></h3>
 {% endblock %}

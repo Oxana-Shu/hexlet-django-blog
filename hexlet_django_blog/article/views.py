@@ -3,6 +3,8 @@ from django.shortcuts import render, get_object_or_404
 from django.views import View
 from django.shortcuts import redirect
 from django.urls import reverse
+from .forms import ArticleForm
+from django.contrib import messages
 
 from hexlet_django_blog.article.models import Article
 
@@ -41,3 +43,17 @@ def index(request, tags=None, article_id=None):
     return render(request, 'articles/index.html', context={'article_id': article_id, 'tags': tags})
 
 
+class ArticleFormCreateView(View):
+
+    def get(self, request, *args, **kwargs):
+        form = ArticleForm()
+        return render(request, 'articles/create.html', {'form': form})
+
+    def post(self, request, *args, **kwargs):
+        form = ArticleForm(request.POST)
+        if form.is_valid(): # Если данные корректные, то сохраняем данные формы
+            form.save()
+            return redirect('articles') # Редирект на указанный маршрут
+        # Если данные некорректные, то возвращаем человека обратно на страницу с заполненной формой
+        messages.error(request, "The article was not created.")
+        return render(request, 'articles/create.html', {'form': form, 'messages': messages})
